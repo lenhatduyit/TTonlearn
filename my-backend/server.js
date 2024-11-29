@@ -27,6 +27,35 @@ app.get('/api/topics', (req, res) => {
         res.json(result);
     });
 });
+
+// GET All Exercises
+app.get("/api/exercises", (req, res) => {
+    const query = "SELECT * FROM exercises";
+    db.query(query, (err, results) => {
+      if (err) {
+        console.error("Error fetching exercises:", err);
+        res.status(500).send("Error fetching exercises.");
+      } else {
+        res.json(results);
+      }
+    });
+  });
+  
+  // GET Exercises by Topic ID
+  app.get("/api/exercises/:topic_id", (req, res) => {
+    const topicId = req.params.topic_id;
+    const query = "SELECT * FROM exercises WHERE topic_id = ?";
+    db.query(query, [topicId], (err, results) => {
+      if (err) {
+        console.error("Error fetching exercises:", err);
+        res.status(500).send("Error fetching exercises.");
+      } else {
+        res.json(results);
+      }
+    });
+  });
+
+  
 app.listen(port, () => {
     console.log(`Server chạy tại http://localhost:${port}`);
 });

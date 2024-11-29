@@ -7,6 +7,7 @@ import Footer from './components/Footer';
 import Header from './components/Header';
 import Home from './pages/HomePage';
 import ProductDetail from './pages/ProductDetail';
+import Exercises from './component/contents/ProductForm/exercises'
 
 
 
@@ -17,6 +18,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/product" element={<ProductIndex />} />
+        <Route path="/exercises/:topic_id" element={<Exercises />} />
         <Route path="/productdetail/id" element={<ProductDetail />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/login" element={<LoginIndex />} />

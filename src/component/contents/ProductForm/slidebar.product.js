@@ -11,6 +11,8 @@ const Sidebar = () => {
     ecoFriendly: false,
     glutenFree: false,
   });
+  const [searchQuery, setSearchQuery] = useState(""); // State for search query
+  const [filteredCategories, setFilteredCategories] = useState(Object.keys(checkedCategories));
 
   const handleCategoryChange = (event) => {
     setCheckedCategories({
@@ -46,47 +48,62 @@ const Sidebar = () => {
       ecoFriendly: false,
       glutenFree: false,
     });
+    setSearchQuery(""); // Clear search query
+    setFilteredCategories(Object.keys(checkedCategories)); // Reset filtered categories
+  };
+
+  // Handle search query change
+  const handleSearchChange = (event) => {
+    setSearchQuery(event.target.value);
+  };
+
+  // Handle Enter key press to filter
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      filterCategories(searchQuery);
+    }
+  };
+
+  // Filter categories based on search query
+  const filterCategories = (query) => {
+    const filtered = Object.keys(checkedCategories).filter((category) =>
+      category.toLowerCase().includes(query.toLowerCase())
+    );
+    setFilteredCategories(filtered);
   };
 
   return (
     <aside className="sidebar">
-      <div className="search-container">
+      {/* <div className="search-container">
         <i className="fas fa-search icon-search"></i>
-        <input type="search" placeholder="Search" />
-        
+        <input
+          type="search"
+          placeholder="Search"
+        />
       </div>
       <div className="clear-filters">
-      <a href="#" className="clear-filters" onClick={clearAllFilters}>
-        Clear all
-      </a>
+        <a href="#" className="clear-filters" onClick={clearAllFilters}>
+          Clear all
+        </a>
       </div>
       <div className="filter">
         <h3 onClick={toggleFilterVisibility}>
           Categories <i className="fas fa-chevron-down icon-arr"></i>
         </h3>
         <ul>
-          <li>
-            <label>
-              <input
-                type="checkbox"
-                name="bakedGoods"
-                checked={checkedCategories.bakedGoods}
-                onChange={handleCategoryChange}
-              />{" "}
-              Baked Goods (8)
-            </label>
-          </li>
-          <li>
-            <label>
-              <input
-                type="checkbox"
-                name="coffee"
-                checked={checkedCategories.coffee}
-                onChange={handleCategoryChange}
-              />{" "}
-              Coffee (2)
-            </label>
-          </li>
+          {filteredCategories.map((category) => (
+            <li key={category}>
+              <label>
+                <input
+                  type="checkbox"
+                  name={category}
+                  checked={checkedCategories[category]}
+                  onChange={handleCategoryChange}
+                />{" "}
+                {category.charAt(0).toUpperCase() + category.slice(1)} (8)
+              </label>
+            </li>
+          ))}
         </ul>
       </div>
       <div className="filter">
@@ -117,7 +134,7 @@ const Sidebar = () => {
             </label>
           </li>
         </ul>
-      </div>
+      </div> */}
     </aside>
   );
 };
